@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "dum dummy page"
+title: "dum-dummy-page"
 permalink: /dummy/
 ---
 
