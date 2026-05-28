@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+---
+layout: default
+title: "test_index"
+permalink: /index
+---
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
