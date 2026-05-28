@@ -20,18 +20,30 @@
 
 title: Archive
 email: lcvd1111@gmail.com
+author: Joon Jo
 description: >- # this means to ignore newlines until "baseurl:"
   This template wants me to write a description for the blog here.
   But I’ve decided not to, because I’m a badass who’s brave enough to say no.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
+favicon: ""
+yat:
+  date_format: "%b %d, %Y"
+
 # twitter_username: jekyllrb
 # github_username:  jekyll
 
 # Build settings
-theme: minima
+# theme: minima
+markdown: kramdown
+kramdown:
+  input: GFM
+
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
 
 # Exclude from processing.
 # The following items will not be processed, by default.
