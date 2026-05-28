@@ -3,6 +3,6 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: home
-title: Home
+title: "Why are you looking at the tab bar?"
 banner: "/assets/images/banners/home.jpeg"
 ---

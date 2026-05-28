@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "test_index"
+title: ""
 permalink: /index
 ---
 
