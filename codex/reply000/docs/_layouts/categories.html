@@ -1,0 +1,56 @@
+---
+layout: framework
+sidebar: category-list
+---
+
+{%- assign category_tree = site.data.category_tree -%}
+
+{%- if site.posts.size > 0 and category_tree -%}
+<div class="page-segments">
+  <ul class="page-segments-list">
+    {%- for level1 in category_tree -%}
+      <li>
+        <h2 id="{{ level1.name | slugify }}" class="segment-name">{{ level1.name }}</h2>
+
+        {%- for post in site.posts -%}
+          {%- if post.category_path and post.category_path.last == level1.name -%}
+            <li>{%- include views/post-item.html item=post -%}</li>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if level1.children -%}
+          <ul>
+            {%- for level2 in level1.children -%}
+              <li>
+                <h3 id="{{ level1.name | append: '-' | append: level2.name | slugify }}">{{ level2.name }}</h3>
+
+                {%- for post in site.posts -%}
+                  {%- if post.category_path and post.category_path[0] == level1.name and post.category_path.last == level2.name -%}
+                    <li>{%- include views/post-item.html item=post -%}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- if level2.children -%}
+                  <ul>
+                    {%- for level3 in level2.children -%}
+                      <li>
+                        <h4 id="{{ level1.name | append: '-' | append: level2.name | append: '-' | append: level3.name | slugify }}">{{ level3.name }}</h4>
+
+                        {%- for post in site.posts -%}
+                          {%- if post.category_path and post.category_path[0] == level1.name and post.category_path[1] == level2.name and post.category_path.last == level3.name -%}
+                            <li>{%- include views/post-item.html item=post -%}</li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+{%- endif -%}

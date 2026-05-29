@@ -3,14 +3,10 @@ layout: framework
 sidebar: category-list
 ---
 
-{%- if site.posts.size > 0 -%}
+{%- assign category_tree = site.data.category_tree -%}
 
-  {%- include functions.html func='log' level='debug' msg='Get value' -%}
-  {%- include functions.html func='get_categories' -%}
-  {% assign categories = return %}
-
-  {% assign keys = categories %}
-  {% assign field = 'categories' %}
-  {%- include views/segments.html -%}
-
+{%- if site.posts.size > 0 and category_tree -%}
+<div class="page-segments">
+  {%- include category-tree.html mode='page' -%}
+</div>
 {%- endif -%}

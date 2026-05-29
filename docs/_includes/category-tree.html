@@ -1,0 +1,91 @@
+{%- assign category_url = '/categories.html' | relative_url -%}
+{%- assign tree_mode = include.mode | default: 'page' -%}
+
+<div class="category-tree category-tree-{{ tree_mode }}">
+  <div class="category-tree-all">
+    <a href="{{ category_url }}">All{% if site.posts.size > 0 %} ({{ site.posts.size }}){% endif %}</a>
+  </div>
+  <hr>
+
+  <ul class="category-tree-list">
+    {%- for level1 in site.data.category_tree -%}
+      {%- assign level1_count = 0 -%}
+      {%- for post in site.posts -%}
+        {%- if post.category_path and post.category_path[0] == level1.name -%}
+          {%- assign level1_count = level1_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign level1_id = level1.name | slugify -%}
+
+      <li>
+        <details{% if tree_mode == 'page' %} open{% endif %}>
+          <summary>{% if tree_mode == 'sidebar' %}<a href="{{ category_url }}#{{ level1_id }}">{{ level1.name }}</a>{% else %}<span id="{{ level1_id }}">{{ level1.name }}</span>{% endif %}{% if level1_count > 0 %}&nbsp;({{ level1_count }}){% endif %}</summary>
+
+          {%- if level1.children -%}
+            <ul>
+              {%- for level2 in level1.children -%}
+                {%- assign level2_count = 0 -%}
+                {%- for post in site.posts -%}
+                  {%- if post.category_path and post.category_path[0] == level1.name and post.category_path[1] == level2.name -%}
+                    {%- assign level2_count = level2_count | plus: 1 -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- assign level2_id = level1.name | append: '-' | append: level2.name | slugify -%}
+
+                <li>
+                  <details{% if tree_mode == 'page' %} open{% endif %}>
+                    <summary>{% if tree_mode == 'sidebar' %}<a href="{{ category_url }}#{{ level2_id }}">{{ level2.name }}</a>{% else %}<span id="{{ level2_id }}">{{ level2.name }}</span>{% endif %}{% if level2_count > 0 %}&nbsp;({{ level2_count }}){% endif %}</summary>
+
+                    {%- if level2.children -%}
+                      <ul>
+                        {%- for level3 in level2.children -%}
+                          {%- assign level3_count = 0 -%}
+                          {%- for post in site.posts -%}
+                            {%- if post.category_path and post.category_path[0] == level1.name and post.category_path[1] == level2.name and post.category_path[2] == level3.name -%}
+                              {%- assign level3_count = level3_count | plus: 1 -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                          {%- assign level3_id = level1.name | append: '-' | append: level2.name | append: '-' | append: level3.name | slugify -%}
+
+                          <li>
+                            <details{% if tree_mode == 'page' %} open{% endif %}>
+                              <summary>{% if tree_mode == 'sidebar' %}<a href="{{ category_url }}#{{ level3_id }}">{{ level3.name }}</a>{% else %}<span id="{{ level3_id }}">{{ level3.name }}</span>{% endif %}{% if level3_count > 0 %}&nbsp;({{ level3_count }}){% endif %}</summary>
+
+                              {%- for post in site.posts -%}
+                                {%- if post.category_path and post.category_path.size == 3 and post.category_path[0] == level1.name and post.category_path[1] == level2.name and post.category_path[2] == level3.name -%}
+                                  <ul>
+                                    <li>{%- include views/post-item.html item=post -%}</li>
+                                  </ul>
+                                {%- endif -%}
+                              {%- endfor -%}
+                            </details>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+
+                    {%- for post in site.posts -%}
+                      {%- if post.category_path and post.category_path.size == 2 and post.category_path[0] == level1.name and post.category_path[1] == level2.name -%}
+                        <ul>
+                          <li>{%- include views/post-item.html item=post -%}</li>
+                        </ul>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </details>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {%- for post in site.posts -%}
+            {%- if post.category_path and post.category_path.size == 1 and post.category_path[0] == level1.name -%}
+              <ul>
+                <li>{%- include views/post-item.html item=post -%}</li>
+              </ul>
+            {%- endif -%}
+          {%- endfor -%}
+        </details>
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>

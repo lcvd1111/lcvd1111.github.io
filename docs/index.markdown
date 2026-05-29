@@ -4,5 +4,7 @@
 
 layout: home
 title: "Why are you looking at the tab bar?"
-banner: "/assets/images/banners/home.jpeg"
+banner: "/assets/images/banners/ocean.jpg"
+heading: "NTHG421"
+subheading: "Introduction to Advanced Nothing"
 ---
